@@ -12,7 +12,7 @@ Creates:
 from app.database import Base, engine, SessionLocal
 from app.models import Plan, Tenant, Subscription, UsageEvent
 
-Base.metadata.create_all(bind=engine)
+
 
 db = SessionLocal()
 

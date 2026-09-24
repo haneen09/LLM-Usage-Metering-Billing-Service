@@ -73,3 +73,17 @@ class UsageEvent(Base):
     created_at = Column(DateTime, default=utcnow)
 
     tenant = relationship("Tenant", back_populates="usage_events")
+
+
+class ProcessedStripeEvent(Base):
+    """
+    Every Stripe event ID we've successfully handled goes here. Stripe
+    can and does deliver the same event more than once (retries on
+    their end) — before doing anything with an incoming event, we check
+    this table. If it's already here, we ignore the event instead of
+    applying it a second time.
+    """
+    __tablename__ = "processed_stripe_events"
+
+    id = Column(String, primary_key=True)  # the Stripe event ID itself, e.g. evt_...
+    processed_at = Column(DateTime, default=utcnow)
